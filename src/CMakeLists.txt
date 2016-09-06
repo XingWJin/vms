@@ -1,9 +1,12 @@
 set(HEADERS
 control.hpp
+adv_diff_input.hpp
+mesh.hpp
 )
 
 set(SOURCES
 control.cpp
+mesh.cpp
 )
 
 add_library(vms ${SOURCES})
