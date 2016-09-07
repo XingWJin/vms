@@ -66,7 +66,7 @@ void Integrator::atPoint(apf::Vector3 const& p, double w, double dv) {
     }
   }
 
-  double tau = get_tau(mesh, me, k, a);
+  double tau = get_tau(mesh, ent, k, a);
 
   for (int i=0; i < num_dofs; ++i) {
     double adv = 0.0;
