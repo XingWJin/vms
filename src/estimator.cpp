@@ -36,20 +36,11 @@ void Estimator::inElement(apf::MeshElement* me) {
   uh_elem = apf::createElement(fem_solution,me);
 }
 
-static double compute_effectivity(double Je_elem, double Jeh_elem) {
-  double I = Jeh_elem;
-  if (Je_elem < 1.0e-13)
-    I = 0.0;
-  else
-    I /= Je_elem;
-  return I;
-}
-
 void Estimator::outElement() {
   apf::MeshEntity* mesh_ent = apf::getMeshEntity(uh_elem);
   apf::setScalar(exact_error, mesh_ent, 0, Je_elem);
   apf::setScalar(approx_error, mesh_ent, 0, Jeh_elem);
-  double I = compute_effectivity(Je_elem, Jeh_elem);
+  double I = std::abs(Je_elem - Jeh_elem)/std::abs(Je_elem);
   apf::setScalar(effectivities, mesh_ent, 0, I);
   apf::destroyElement(uh_elem);
 }
