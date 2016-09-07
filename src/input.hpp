@@ -16,6 +16,7 @@ struct Input {
   function forcing_function;
   function qoi_function;
   function exact_solution;
+  double exact_qoi;
   std::string output_name;
 };
 

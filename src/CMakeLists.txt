@@ -6,6 +6,7 @@ linear_algebra.hpp
 tau.hpp
 integrator.hpp
 solver.hpp
+estimator.hpp
 )
 
 set(SOURCES
@@ -15,6 +16,7 @@ linear_algebra.cpp
 tau.cpp
 integrator.cpp
 solver.cpp
+estimator.cpp
 )
 
 add_library(vms ${SOURCES})

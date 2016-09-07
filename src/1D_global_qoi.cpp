@@ -1,6 +1,7 @@
 #include "control.hpp"
 #include "input.hpp"
 #include "solver.hpp"
+#include "estimator.hpp"
 
 namespace {
 
@@ -28,6 +29,7 @@ vms::Input in = {
   /* forcing function=*/        f,
   /* qoi function=*/            q,
   /* exact solution=*/          u,
+  /* exact qoi=*/               0.4990,
   /* output name=*/             ""};
 
 static void print_usage(char const* exe) {
@@ -56,10 +58,13 @@ static void setup_input(vms::Input* in, char** argv) {
   vms::print(" output name:       %s", in->output_name.c_str());
 }
 
-static void run_example(int argc, char** argv) {
-  vms::Solver solver(&in);
+static void run_example(vms::Input* in) {
+  vms::Solver solver(in);
   solver.solve();
-  solver.get_mesh()->write(in.output_name.c_str());
+  vms::Estimator estimator(in, solver.get_mesh());
+  estimator.estimate();
+  solver.get_mesh()->write(in->output_name.c_str());
+  estimator.summarize();
 }
 
 }
@@ -68,6 +73,6 @@ int main(int argc, char** argv) {
   vms::initialize();
   check_args(argc, argv);
   setup_input(&in, argv);
-  run_example(argc, argv);
+  run_example(&in);
   vms::finalize();
 }
