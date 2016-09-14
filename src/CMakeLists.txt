@@ -26,3 +26,6 @@ target_link_libraries(vms PUBLIC SCOREC::core)
 
 add_executable(1D_global_qoi 1D_global_qoi.cpp)
 target_link_libraries(1D_global_qoi vms)
+
+add_executable(2D_global_qoi 2D_global_qoi.cpp)
+target_link_libraries(2D_global_qoi vms)
