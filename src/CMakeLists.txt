@@ -29,3 +29,6 @@ target_link_libraries(1D_global_qoi vms)
 
 add_executable(2D_global_qoi 2D_global_qoi.cpp)
 target_link_libraries(2D_global_qoi vms)
+
+add_executable(2D_global_qoi_tri 2D_global_qoi_tri.cpp)
+target_link_libraries(2D_global_qoi_tri vms)
