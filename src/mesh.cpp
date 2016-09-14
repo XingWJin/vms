@@ -46,8 +46,8 @@ double Mesh::get_mesh_size(apf::MeshEntity* e) {
   apf::Downward edges;
   int ne = mesh->getDownward(e,1,edges);
   for (unsigned i=0; i < ne; ++i)
-    h += std::max(h, apf::measure(mesh,edges[i]));
-  return h/ne;
+    h = std::max(h, apf::measure(mesh,edges[i]));
+  return h;
 }
 
 void Mesh::write(char const* name) {
