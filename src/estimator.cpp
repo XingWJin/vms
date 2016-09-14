@@ -80,9 +80,20 @@ void Estimator::estimate() {
   print("error estimated in %f seconds", t1-t0);
 }
 
+static double get_h(Mesh* mesh) {
+  int d = mesh->get_dim();
+  apf::Mesh* m = mesh->get_apf_mesh();
+  apf::MeshEntity* e;
+  apf::MeshIterator* it = m->begin(d);
+  e = m->iterate(it);
+  double h = mesh->get_mesh_size(e);
+  m->end(it);
+  return h;
+}
+
 void Estimator::summarize() {
   double n = in->num_elems;
-  double h = 1.0/n;
+  double h = get_h(mesh);
   double am = in->a.getLength();
   double k = in->k;
   double Pe = am/k;
