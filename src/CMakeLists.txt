@@ -7,6 +7,7 @@ tau.hpp
 integrator.hpp
 solver.hpp
 estimator.hpp
+adapater.hpp
 )
 
 set(SOURCES
@@ -17,6 +18,7 @@ tau.cpp
 integrator.cpp
 solver.cpp
 estimator.cpp
+adapter.cpp
 )
 
 add_library(vms ${SOURCES})

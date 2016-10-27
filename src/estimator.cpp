@@ -87,6 +87,14 @@ void Estimator::estimate() {
 }
 
 void Estimator::summarize() {
+  print("J(u) | J(uh) | J(e) | eta_1 | eta_2 | eta^_1 | eta^_2");
+  print("-----------------------------------------------------");
+  print("%.5e | %.5e | %.5e | %.5e | %.5e | %.5e | %.5e ",
+      Ju, Juh, Ju-Juh, Jeh1, Jeh2, Jeh1_bound, Jeh2_bound);
+  print("I_eta_1 | I_eta_2 | I_eta^_1 | I_eta^_2");
+  print("---------------------------------------");
+  print("%.5e | %.5e | %.5e | %.5e",
+      (Ju-Juh)/Jeh1, (Ju-Juh)/Jeh2, (Ju-Juh)/Jeh1_bound, (Ju-Juh)/Jeh2_bound);
 }
 
 }

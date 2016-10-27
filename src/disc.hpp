@@ -18,7 +18,9 @@ class Disc {
     long get_num_total_nodes() {return num_total_nodes;}
     apf::Mesh2* get_apf_mesh() {return mesh;}
     apf::GlobalNumbering* get_numbering() {return numbering;}
+    void update();
     void write(const int i);
+    void write_pvd(const int end);
   private:
     int dim;
     long num_owned_nodes;
