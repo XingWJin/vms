@@ -2,6 +2,7 @@
 #include "input.hpp"
 #include "disc.hpp"
 #include "solver.hpp"
+#include "estimator.hpp"
 
 namespace {
 
@@ -14,8 +15,11 @@ double f(apf::Vector3 const&) {
   return 1.0;
 }
 
-double q(apf::Vector3 const&) {
-  return 1.0;
+double q(apf::Vector3 const& x) {
+  if ( (x[0] <= -0.5) && (x[1] >= 0.5))
+    return 1.0;
+  else
+    return 0.0;
 }
 
 vms::Input in = {
@@ -38,13 +42,20 @@ void solve_primal(vms::Disc* disc) {
 void solve_dual(vms::Disc* disc) {
   vms::Solver dual(&in, disc, true);
   dual.solve();
-  disc->write(0);
+}
+
+void estimate_error(vms::Disc* disc) {
+  vms::Estimator error(&in, disc);
+  error.estimate();
+  error.summarize();
 }
 
 void run() {
   vms::Disc disc(&in);
   solve_primal(&disc);
   solve_dual(&disc);
+  estimate_error(&disc);
+  disc.write(0);
 }
 
 }

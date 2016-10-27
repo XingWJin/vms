@@ -6,6 +6,7 @@ linalg.hpp
 tau.hpp
 integrator.hpp
 solver.hpp
+estimator.hpp
 )
 
 set(SOURCES
@@ -15,6 +16,7 @@ linalg.cpp
 tau.cpp
 integrator.cpp
 solver.cpp
+estimator.cpp
 )
 
 add_library(vms ${SOURCES})
@@ -22,5 +24,8 @@ target_include_directories(vms PUBLIC ${PETSC_INCLUDE_DIR})
 target_link_libraries(vms PUBLIC ${PETSC_LIBRARIES})
 target_link_libraries(vms PUBLIC SCOREC::core)
 
-add_executable(lshape_globalqoi_spr lshape_globalqoi_spr.cpp)
-target_link_libraries(lshape_globalqoi_spr vms)
+add_executable(lshape_globalqoi lshape_globalqoi.cpp)
+target_link_libraries(lshape_globalqoi vms)
+
+add_executable(lshape_squareqoi lshape_squareqoi.cpp)
+target_link_libraries(lshape_squareqoi vms)
