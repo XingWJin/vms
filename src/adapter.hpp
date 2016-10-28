@@ -2,6 +2,7 @@
 #define vms_adapter_hpp
 
 #include <cstdlib>
+#include "input.hpp"
 
 namespace vms {
 
@@ -14,6 +15,7 @@ class Adapter {
     void adapt(size_t t, int i);
   private:
     Disc* disc;
+    Method method;
 };
 
 }

@@ -7,6 +7,7 @@ tau.hpp
 integrator.hpp
 solver.hpp
 estimator.hpp
+size.hpp
 adapater.hpp
 )
 
@@ -18,6 +19,7 @@ tau.cpp
 integrator.cpp
 solver.cpp
 estimator.cpp
+size.cpp
 adapter.cpp
 )
 

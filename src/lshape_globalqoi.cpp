@@ -26,7 +26,7 @@ vms::Input in = {
   /* forcing function */        f,
   /* dual forcing function */   q,
   /* exact qoi value */         Ju,
-  /* adapt method */            vms::SPR,
+  /* adapt method */            vms::VMS2,
   /* geom file */               "",
   /* mesh file */               "",
   /* out file */                ""
@@ -57,13 +57,13 @@ static void adapt_mesh(vms::Disc* disc, int i) {
 
 void run() {
   vms::Disc disc(&in);
-  for (int i=0; i < 10; ++i) {
+  for (int i=0; i < 15; ++i) {
     solve_primal(&disc);
     solve_dual(&disc);
     estimate_error(&disc);
     adapt_mesh(&disc, i);
   }
-  disc.write_pvd(10);
+  disc.write_pvd(15);
 }
 
 }
