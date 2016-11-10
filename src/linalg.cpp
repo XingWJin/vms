@@ -86,10 +86,15 @@ void LinAlg::attach(Disc* d, const char* name) {
   apf::GlobalNumbering* gn = d->get_numbering();
   apf::DynamicArray<apf::Node> nodes;
   apf::getNodes(gn,nodes);
-  ASSERT(nodes.getSize() == unsigned(n));
-  apf::Field* f = apf::createFieldOn(d->get_apf_mesh(), name, apf::SCALAR);
-  for (unsigned i=0; i < nodes.getSize(); ++i)
-    apf::setScalar(f,nodes[i].entity,nodes[i].node,X[i]);
+  apf::Mesh* m = d->get_apf_mesh();
+  apf::Field* f = apf::createFieldOn(m, name, apf::SCALAR);
+  int idx=0;
+  for (unsigned i=0; i < nodes.getSize(); ++i) {
+    int node = nodes[i].node;
+    apf::MeshEntity* ent = nodes[i].entity;
+    if (m->isOwned(nodes[i].entity))
+      apf::setScalar(f,ent,node,X[idx++]);
+  }
   apf::synchronize(f);
   CALL(VecRestoreArray(x,&X));
 }
