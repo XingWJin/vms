@@ -17,7 +17,7 @@ double f(apf::Vector3 const&) {
 }
 
 double q(apf::Vector3 const& x) {
-  if ( (x[0] <= -0.5) && (x[1] >= 0.5))
+  if ( (x[0] <= -0.4) && (x[1] >= 0.4))
     return 1.0;
   else
     return 0.0;
@@ -29,7 +29,7 @@ vms::Input in = {
   /* forcing function */        f,
   /* dual forcing function */   q,
   /* exact qoi value */         Ju,
-  /* adapt method */            vms::VMS2,
+  /* adapt method */            vms::SPR,
   /* geom file */               "",
   /* mesh file */               "",
   /* out file */                ""
@@ -58,24 +58,28 @@ static void adapt_mesh(vms::Disc* disc, int i) {
   j*=2;
 }
 
-void run() {
+void run(int n) {
   vms::Disc disc(&in);
-  for (int i=0; i < 15; ++i) {
+  for (int i=0; i < n; ++i) {
     solve_primal(&disc);
     solve_dual(&disc);
     estimate_error(&disc);
     adapt_mesh(&disc, i);
   }
-  disc.write_pvd(15);
+  disc.write_pvd(n);
 }
 
 }
 
 int main(int argc, char** argv) {
   vms::initialize();
+  ASSERT(argc == 6);
   in.geom_file = argv[1];
   in.mesh_file = argv[2];
   in.out_file = argv[3];
-  run();
+  int m = atoi(argv[4]);
+  in.adapt_method = vms::Method(m);
+  int n = atoi(argv[5]);
+  run(n);
   vms::finalize();
 }
