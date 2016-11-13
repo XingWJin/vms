@@ -1,0 +1,48 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{width=7cm,compat=1.8}
+
+\begin{document}
+
+\begin{tikzpicture}
+\pgfplotsset{width=6cm,compat=newest}
+\begin{loglogaxis}[
+  width=0.5\textwidth,
+  xlabel={Degrees of freedom},
+  ylabel={$J(u) - J(u^h)$},
+  cycle list name=black white,
+  legend style={at={(0.02,0.02)},anchor=south west},
+  smooth
+]
+\addplot table[x=dofs,y=Je] {unif1.dat};
+\addlegendentry{UNIF}
+\addplot table[x=dofs,y=Je] {spr1.dat};
+\addlegendentry{SPR}
+\addplot table[x=dofs,y=Je] {vms11.dat};
+\addlegendentry{VMS1}
+\addplot table[x=dofs,y=Je] {vms21.dat};
+\addlegendentry{VMS2}
+\draw (axis cs:1500,0.001) -- (axis cs:3000,0.000368);
+\draw (1500,0.001) -| (3000,0.000368)
+  node [pos=0.75,anchor=west]{1.44};
+
+\end{loglogaxis}
+
+\end{tikzpicture}
+
+\end{document}
+
+%\addplot table[x=dofs,
+%  y={create col/linear regression={y=Je,
+%    variance list={1000,800,600,500,400,200,100}}}]
+%   {vms21.dat}
+%   coordinate [pos=0.25] (A)
+%   coordinate [pos=0.4]  (B);
+
+%\xdef\slope{\pgfplotstableregressiona}
+
+%\draw (A) -| (B)
+%     node [pos=0.75,anchor=west]
+%         {\pgfmathprintnumber{\slope}};
+

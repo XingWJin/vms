@@ -1,0 +1,37 @@
+model lshape.dmg loaded in 0.000185 seconds
+mesh lshape-serial.smb loaded in 0.012449 seconds
+number of triangle 2000 quad 0
+mesh entity counts: v 1065 e 3064 f 2000 r 0
+mesh verified in 0.008291 seconds
+homogeneous dbcs applied to 6 boundaries
+linear system solved in 0.006949 seconds
+linear system converged in 26 iters
+homogeneous dbcs applied to 6 boundaries
+linear system solved in 0.005224 seconds
+linear system converged in 26 iters
+error estimated in 0.013999 seconds
+dofs | J(u) | J(uh) | J(e) | eta_1 | eta_2 | eta^_1 | eta^_2
+-----------------------------------------------------
+1065 | 1.65883e+00 | 1.5683567250e+00 | 9.0468559491e-02 | 6.35972e-02 | 6.35972e-02 | 8.03957e-02 | 1.12663e-01 
+dofs | I_eta_1 | I_eta_2 | I_eta^_1 | I_eta^_2
+---------------------------------------
+1065 | 1.42252e+00 | 1.42252e+00 | 1.12529e+00 | 8.03003e-01
+using spr size field
+SPR (target): error estimated in 0.009827 seconds
+writeVtuFile into buffers: 0.006544 seconds
+writeVtuFile buffers to disk: 0.000094 seconds
+vtk files global_00625_0 written in 0.006890 seconds
+
+MeshAdapt: version 2.0 !
+
+MeshAdapt: iteration 0
+
+MeshAdapt: coarsened 582 edges in 0.037939 seconds
+
+MeshAdapt: bad shapes down from 0 to 0 in 0.003089 seconds
+
+MeshAdapt: worst element quality is 2.011208e-01
+
+MeshAdapt: mesh adapted in 0.045934 seconds
+number of triangle 871 quad 0
+mesh entity counts: v 483 e 1353 f 871 r 0
