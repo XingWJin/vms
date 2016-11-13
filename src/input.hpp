@@ -5,7 +5,7 @@
 
 namespace vms {
 
-enum Method {SPR, VMS1, VMS2};
+enum Method {SPR, VMS1, VMS2, MIN};
 
 typedef double(*function)(apf::Vector3 const& x);
 
