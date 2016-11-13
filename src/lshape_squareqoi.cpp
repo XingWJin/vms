@@ -10,14 +10,17 @@ namespace {
 static const double k = 0.001;
 static const double a0 = -1.0;
 static const double a1 = 1.0;
-static const double Ju = 1.65361;
+static const double Ju = 3.9271535758e-01;
 
 double f(apf::Vector3 const&) {
   return 1.0;
 }
 
 double q(apf::Vector3 const& x) {
-  if ( (x[0] <= -0.4) && (x[1] >= 0.4))
+  if ((x[0] <= -0.5) &&
+      (x[0] >= -0.95) &&
+      (x[1] <= 0.95) &&
+      (x[1] >= 0.5))
     return 1.0;
   else
     return 0.0;
