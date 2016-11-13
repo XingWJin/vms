@@ -10,7 +10,7 @@ namespace {
 static const double k = 0.001;
 static const double a0 = -1.0;
 static const double a1 = 1.0;
-static const double Ju = 1.6585900522;
+static const double Ju = 1.6588252845;
 
 double f(apf::Vector3 const&) {
   return 1.0;
