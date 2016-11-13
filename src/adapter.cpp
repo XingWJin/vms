@@ -1,4 +1,5 @@
 #include "adapter.hpp"
+#include "control.hpp"
 #include "disc.hpp"
 #include "size.hpp"
 #include <ma.h>
@@ -41,15 +42,28 @@ static apf::Field* get_spr_size_field(Disc* d, size_t t) {
 static apf::Field* get_size(Method method, Disc* d, size_t t) {
   apf::Field* size;
   apf::Mesh* m = d->get_apf_mesh();
-  if (method == SPR)
+  if (method == SPR) {
+    print("using spr size field");
     size = get_spr_size_field(d, t);
+  }
   else if (method == VMS1) {
+    print("using vms 1 size field");
     apf::Field* e = m->findField("Jeh1_bound");
     size = get_iso_target_size(e, t);
   }
   else if (method == VMS2) {
+    print("using vms 2 size field");
     apf::Field* e = m->findField("Jeh2_bound");
     size = get_iso_target_size(e, t);
+  }
+  else if (method == MIN) {
+    print("using min size field");
+    apf::Field* e1 = m->findField("Jeh1_bound");
+    apf::Field* e2 = m->findField("Jeh2_bound");
+    apf::Field* s1 = get_iso_target_size(e1, t, "size1");
+    apf::Field* s2 = get_iso_target_size(e2, t, "size2");
+    apf::Field* s3 = get_spr_size_field(d, t);
+    size = get_min_size(s1,s2,s3);
   }
   return size;
 }
