@@ -18,13 +18,15 @@ struct Specification {
   double size_factor;
   apf::Field* elem_size;
   apf::Field* vtx_size;
+  std::string size_name;
 };
 
 static void setup_specification(
     Specification* s,
     apf::Field* err,
     size_t t,
-    int p) {
+    int p,
+    std::string name) {
   s->mesh = apf::getMesh(err);
   s->error = err;
   s->polynomial_order = p;
@@ -34,6 +36,7 @@ static void setup_specification(
   s->size_factor = 0.0;
   s->elem_size = 0;
   s->vtx_size = 0;
+  s->size_name = name;
 }
 
 static double sum_contributions(Specification* s) {
@@ -96,10 +99,9 @@ static void avg_to_vtx(apf::Field* ef, apf::Field* vf, apf::MeshEntity* ent) {
   apf::Mesh* m = apf::getMesh(ef);
   apf::Adjacent elems;
   m->getAdjacent(ent, m->getDimension(), elems);
-  double s = 0.0;
+  double s = 100000.0;
   for (size_t i=0; i < elems.getSize(); ++i)
-    s += apf::getScalar(ef, elems[i], 0);
-  s /= elems.getSize();
+    s = std::min(s, apf::getScalar(ef, elems[i], 0));
   apf::setScalar(vf, ent, 0, s);
 }
 
@@ -127,7 +129,8 @@ class AverageOp : public apf::CavityOp {
 };
 
 static void average_size_field(Specification* s) {
-  s->vtx_size = apf::createLagrangeField(s->mesh, "size", apf::SCALAR, 1);
+  std::string n = s->size_name;
+  s->vtx_size = apf::createLagrangeField(s->mesh, n.c_str(), apf::SCALAR, 1);
   AverageOp op(s);
   op.applyToDimension(0);
 }
@@ -140,15 +143,41 @@ static void create_size_field(Specification* s) {
   apf::destroyField(s->error);
 }
 
-apf::Field* get_iso_target_size(apf::Field* e, std::size_t t) {
+apf::Field* get_iso_target_size(
+    apf::Field* e,
+    std::size_t t,
+    std::string name) {
   double t0 = time();
   ASSERT(t > 0);
   Specification s;
-  setup_specification(&s, e, t, 1);
+  setup_specification(&s, e, t, 1, name);
   create_size_field(&s);
   double t1 = time();
   print("isotropic target size field computed in %f seconds", t1-t0);
   return s.vtx_size;
+}
+
+apf::Field* get_min_size(
+    apf::Field* s1,
+    apf::Field* s2,
+    apf::Field* s3) {
+  apf::Mesh* m = apf::getMesh(s1);
+  apf::Field* f = apf::createLagrangeField(m, "min_size", apf::SCALAR, 1); 
+  apf::MeshEntity* vtx = 0;
+  apf::MeshIterator* vertices = m->begin(0);
+  while ((vtx = m->iterate(vertices))) {
+    double v1 = apf::getScalar(s1, vtx, 0);
+    double v2 = apf::getScalar(s2, vtx, 0);
+    double v3 = apf::getScalar(s3, vtx, 0);
+    double v = std::min(v1, v2);
+    v = std::min(v, v3);
+    apf::setScalar(f, vtx, 0, v);
+  }
+  m->end(vertices);
+  apf::destroyField(s1);
+  apf::destroyField(s2);
+  apf::destroyField(s3);
+  return f;
 }
 
 }
