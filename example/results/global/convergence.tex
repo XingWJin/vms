@@ -8,12 +8,12 @@
 \begin{tikzpicture}
 \pgfplotsset{width=6cm,compat=newest}
 \begin{loglogaxis}[
+  legend style={font=\tiny},
   width=0.5\textwidth,
   xlabel={Degrees of freedom},
-  ylabel={$J(u) - J(u^h)$},
+  ylabel={$|J(u) - J(u^h)|$},
   cycle list name=black white,
   legend style={at={(0.02,0.02)},anchor=south west},
-  smooth
 ]
 \addplot table[x=dofs,y=Je] {unif1.dat};
 \addlegendentry{UNIF}
@@ -32,17 +32,3 @@
 \end{tikzpicture}
 
 \end{document}
-
-%\addplot table[x=dofs,
-%  y={create col/linear regression={y=Je,
-%    variance list={1000,800,600,500,400,200,100}}}]
-%   {vms21.dat}
-%   coordinate [pos=0.25] (A)
-%   coordinate [pos=0.4]  (B);
-
-%\xdef\slope{\pgfplotstableregressiona}
-
-%\draw (A) -| (B)
-%     node [pos=0.75,anchor=west]
-%         {\pgfmathprintnumber{\slope}};
-
