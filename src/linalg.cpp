@@ -13,7 +13,7 @@ LinAlg::LinAlg(int n, long N) {
   CALL(MatCreateAIJ(PETSC_COMM_WORLD,n,n,NN,NN,300,PETSC_NULL,300,PETSC_NULL,&A));
   CALL(MatSetOption(A,MAT_NEW_NONZERO_ALLOCATION_ERR,PETSC_FALSE));
   CALL(KSPCreate(PETSC_COMM_WORLD,&solver));
-  CALL(KSPSetTolerances(solver,1.0e-10,1.0e-10,PETSC_DEFAULT,1000));
+  CALL(KSPSetTolerances(solver,1.0e-10,1.0e-10,PETSC_DEFAULT,2000));
   CALL(VecDuplicate(b,&x));
 }
 
