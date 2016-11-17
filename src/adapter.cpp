@@ -75,9 +75,19 @@ void Adapter::adapt(size_t t, int i) {
   destroy_fields(disc);
   ma::Input* in = ma::configure(m, size);
   in->maximumIterations = 1;
+  in->shouldCoarsen = true;
   ma::adapt(in);
   apf::destroyField(size);
   disc->update();
+}
+
+void Adapter::unif_adapt(int i) {
+  apf::Mesh2* m = disc->get_apf_mesh();
+  disc->write(i);
+  destroy_fields(disc);
+  ma::runUniformRefinement(m);
+  disc->update();
+  disc->write(i+1);
 }
 
 }

@@ -13,6 +13,7 @@ class Adapter {
   public:
     Adapter(Input* in, Disc* d);
     void adapt(size_t t, int i);
+    void unif_adapt(int i);
   private:
     Disc* disc;
     Method method;
