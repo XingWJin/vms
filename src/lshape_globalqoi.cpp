@@ -10,7 +10,7 @@ namespace {
 static const double k = 0.001;
 static const double a0 = -1.0;
 static const double a1 = 1.0;
-static const double Ju = 1.6588252845;
+static const double Ju = 1.6588688371;
 
 double f(apf::Vector3 const&) {
   return 1.0;
@@ -62,6 +62,14 @@ void run(int n) {
     solve_dual(&disc);
     estimate_error(&disc);
     adapt_mesh(&disc, i);
+  }
+  if (in.adapt_method == vms::MIN) {
+    vms::Adapter adapter(&in, &disc);
+    adapter.unif_adapt(n);
+    solve_primal(&disc);
+    solve_dual(&disc);
+    estimate_error(&disc);
+    n = n+2;
   }
   disc.write_pvd(n);
 }
