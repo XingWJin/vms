@@ -55,6 +55,9 @@ static void assemble_dirichlet(Disc* disc, LinAlg* la) {
   while ((boundary = gmi_next(model,boundaries))) {
     apf::DynamicArray<apf::Node> nodes;
     apf::ModelEntity* b = reinterpret_cast<apf::ModelEntity*>(boundary);
+    int tag = m->getModelTag(b);
+    if ( (tag == 16) || (tag == 18) || (tag == 20) || (tag == 22) )
+      continue;
     apf::getNodesOnClosure(m,b,nodes,m->getShape());
     int n_nodes = nodes.getSize();
     long rows[n_nodes];
